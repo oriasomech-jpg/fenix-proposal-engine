@@ -1,0 +1,5 @@
+services:
+  - type: web
+    name: fenix-proposal-engine
+    env: docker
+    plan: free
