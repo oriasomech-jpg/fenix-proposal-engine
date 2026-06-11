@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>לידים מקמפיין — GEMEL INVEST</title>
+<meta name="theme-color" content="#071540"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="לידים CRM"/>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #f0f4fb;
+  --surface: #ffffff;
+  --surfaceGlass: rgba(255,255,255,0.92);
+  --line: rgba(15,25,45,0.14);
+  --text: #080f1e;
+  --muted: rgba(15,23,42,0.58);
+  --mutedLight: rgba(15,23,42,0.38);
+  --brandA: #071540;
+  --brandC: #2a5cf5;
+  --brandDeep: #1e3d7a;
+  --shadow: 0 8px 28px rgba(15,23,42,0.12);
+  --shadowSm: 0 2px 10px rgba(15,23,42,0.08);
+  --radius: 18px;
+  --radius2: 14px;
+  --radius3: 10px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  font-family: 'Rubik', system-ui, -apple-system, sans-serif;
+  color: var(--text);
+  font-size: 15px;
+}
+
+/* ===== APP SHELL ===== */
+#appShell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: -webkit-fill-available;
+  overflow: hidden;
+}
+
+/* ===== TOP BAR ===== */
+.topBar {
+  flex-shrink: 0;
+  background: linear-gradient(135deg, var(--brandA) 0%, var(--brandDeep) 100%);
+  padding-top: calc(var(--safe-top) + 14px);
+  padding-bottom: 14px;
+  padding-inline: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  box-shadow: 0 4px 20px rgba(7,21,64,0.35);
+  position: relative;
+  z-index: 10;
+}
+.topBar__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.topBar__dot {
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0.10));
+  border: 1px solid rgba(255,255,255,0.22);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+.topBar__title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.2;
+}
+.topBar__sub {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.62);
+  margin-top: 1px;
+}
+.topBar__right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.topBar__btn {
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.22);
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  display: flex; align-items: center; gap: 5px;
+  transition: background 0.15s;
+}
+.topBar__btn:active { background: rgba(255,255,255,0.22); }
+.topBar__badge {
+  height: 22px;
+  padding: 0 9px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.28);
+  color: #fff;
+  font-size: 11.5px;
+  font-weight: 700;
+  display: flex; align-items: center;
+}
+
+/* ===== TABS ===== */
+.tabs {
+  flex-shrink: 0;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  padding: 0 12px;
+  gap: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  flex-shrink: 0;
+  height: 44px;
+  padding: 0 14px;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  border-bottom: 2.5px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+  display: flex; align-items: center; gap: 6px;
+  white-space: nowrap;
+}
+.tab.is-active {
+  color: var(--brandC);
+  border-bottom-color: var(--brandC);
+}
+.tab__count {
+  height: 18px;
+  min-width: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: rgba(42,92,245,0.12);
+  color: var(--brandC);
+  font-size: 10.5px;
+  font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+}
+.tab.is-active .tab__count {
+  background: var(--brandC);
+  color: #fff;
+}
+
+/* ===== SEARCH BAR ===== */
+.searchBar {
+  flex-shrink: 0;
+  padding: 10px 14px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.searchBar svg { color: var(--mutedLight); flex-shrink: 0; }
+.searchBar__input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+}
+.searchBar__input::placeholder { color: var(--mutedLight); }
+.searchBar__clear {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(15,23,42,0.12);
+  color: var(--muted);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 12px;
+}
+.searchBar__clear.is-visible { display: flex; }
+
+/* ===== FILTER CHIPS ===== */
+.filterRow {
+  flex-shrink: 0;
+  display: flex;
+  gap: 7px;
+  padding: 8px 14px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  background: var(--surface);
+}
+.filterRow::-webkit-scrollbar { display: none; }
+.chip {
+  flex-shrink: 0;
+  height: 30px;
+  padding: 0 13px;
+  border-radius: 999px;
+  border: 1px solid rgba(15,25,45,0.14);
+  background: rgba(255,255,255,0.8);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  display: flex; align-items: center; gap: 5px;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.chip.is-active {
+  background: linear-gradient(135deg, var(--brandC), #1a3fd4);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(42,92,245,0.30);
+}
+
+/* ===== SCROLL AREA ===== */
+.scrollArea {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 12px;
+  padding-bottom: calc(var(--safe-bottom) + 80px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ===== LOADING / EMPTY ===== */
+.stateBox {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--muted);
+  padding: 40px 20px;
+  text-align: center;
+}
+.stateBox__icon {
+  width: 56px; height: 56px;
+  border-radius: 18px;
+  background: rgba(42,92,245,0.08);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
+}
+.stateBox__title { font-size: 15px; font-weight: 700; color: var(--text); }
+.stateBox__sub { font-size: 13px; }
+
+/* Spinner */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner {
+  width: 28px; height: 28px;
+  border: 3px solid rgba(42,92,245,0.18);
+  border-top-color: var(--brandC);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+/* ===== LEAD CARD ===== */
+.leadCard {
+  background: var(--surfaceGlass);
+  border: 1px solid var(--line);
+  border-radius: var(--radius2);
+  padding: 14px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.18s, transform 0.12s;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.leadCard:active { transform: scale(0.985); box-shadow: var(--shadowSm); }
+.leadCard::before {
+  content: "";
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--accent, rgba(15,25,45,0.18));
+  border-radius: 0 var(--radius2) var(--radius2) 0;
+}
+.leadCard[data-status="new"]       { --accent: rgba(42,92,245,0.6); }
+.leadCard[data-status="in_progress"] { --accent: rgba(234,179,8,0.75); }
+.leadCard[data-status="closed"]    { --accent: rgba(22,163,74,0.7); }
+.leadCard[data-status="irrelevant"]{ --accent: rgba(239,68,68,0.6); }
+.leadCard[data-status="no_answer"] { --accent: rgba(249,115,22,0.7); }
+.leadCard[data-status="agent_appointment"] { --accent: rgba(147,51,234,0.65); }
+
+.leadCard__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid rgba(15,25,45,0.07);
+}
+.leadCard__name {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.statusPill--new { background: rgba(42,92,245,0.12); color: var(--brandC); border: 1px solid rgba(42,92,245,0.22); }
+.statusPill--in_progress { background: rgba(234,179,8,0.14); color: #92400e; border: 1px solid rgba(234,179,8,0.30); }
+.statusPill--closed { background: rgba(22,163,74,0.14); color: #15803d; border: 1px solid rgba(22,163,74,0.25); }
+.statusPill--irrelevant { background: rgba(239,68,68,0.12); color: #991b1b; border: 1px solid rgba(239,68,68,0.22); }
+.statusPill--no_answer { background: rgba(249,115,22,0.14); color: #9a3412; border: 1px solid rgba(249,115,22,0.28); }
+.statusPill--agent_appointment { background: rgba(147,51,234,0.14); color: #6b21a8; border: 1px solid rgba(147,51,234,0.26); }
+
+.leadCard__rows { display: flex; flex-direction: column; gap: 0; }
+.leadCard__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(15,25,45,0.05);
+}
+.leadCard__row:last-child { border-bottom: none; padding-bottom: 0; }
+.leadCard__row svg { color: var(--brandDeep); opacity: 0.5; flex-shrink: 0; }
+.leadCard__lbl {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--mutedLight);
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-width: 34px;
+}
+.leadCard__val {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-inline-start: auto;
+  text-align: start;
+}
+.leadCard__val--phone { color: var(--brandDeep); direction: ltr; unicode-bidi: embed; }
+.leadCard__val--unassigned { color: rgba(239,68,68,0.9); }
+.leadCard__srcBadge {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(42,92,245,0.10);
+  color: var(--brandC);
+  border: 1px solid rgba(42,92,245,0.18);
+  flex-shrink: 0;
+  margin-inline-start: 6px;
+}
+.leadCard__srcBadge--call {
+  background: rgba(22,163,74,0.10);
+  color: #15803d;
+  border-color: rgba(22,163,74,0.22);
+}
+
+/* ===== DETAIL PANEL (modal sheet) ===== */
+.sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
+}
+.sheet.is-open {
+  opacity: 1;
+  pointer-events: all;
+}
+.sheet__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(7,21,64,0.45);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+.sheet__card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-height: 90vh;
+  background: var(--surface);
+  border-radius: 24px 24px 0 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(40px);
+  transition: transform 0.28s cubic-bezier(0.34,1.15,0.64,1);
+  padding-bottom: var(--safe-bottom);
+}
+.sheet.is-open .sheet__card { transform: translateY(0); }
+.sheet__handle {
+  width: 38px; height: 4px;
+  border-radius: 999px;
+  background: rgba(15,25,45,0.18);
+  margin: 10px auto 0;
+  flex-shrink: 0;
+}
+.sheet__head {
+  padding: 12px 18px 14px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+}
+.sheet__headInfo { flex: 1; min-width: 0; }
+.sheet__name {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--text);
+  line-height: 1.25;
+  margin-bottom: 6px;
+}
+.sheet__closeBtn {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(15,23,42,0.08);
+  color: var(--muted);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  font-size: 16px;
+  line-height: 1;
+}
+.sheet__body {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.detailSection { display: flex; flex-direction: column; gap: 2px; }
+.detailSection__title {
+  font-size: 10.5px;
+  font-weight: 800;
+  color: var(--mutedLight);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+.detailRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: rgba(240,245,255,0.6);
+  border-radius: var(--radius3);
+  border: 1px solid rgba(15,25,45,0.07);
+  min-height: 40px;
+}
+.detailRow svg { color: var(--brandDeep); opacity: 0.55; flex-shrink: 0; }
+.detailRow__label {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--muted);
+  flex-shrink: 0;
+  min-width: 70px;
+}
+.detailRow__val {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text);
+  flex: 1;
+  text-align: start;
+}
+.detailRow__val--phone { color: var(--brandDeep); direction: ltr; unicode-bidi: embed; }
+.detailRow__val--muted { color: var(--muted); }
+.detailRow--desc { align-items: flex-start; }
+.detailRow--desc .detailRow__val { white-space: pre-wrap; word-break: break-word; line-height: 1.55; }
+
+/* phone action */
+.phoneAction {
+  display: flex;
+  gap: 10px;
+  padding: 0;
+}
+.phoneAction__btn {
+  flex: 1;
+  height: 46px;
+  border-radius: var(--radius2);
+  border: none;
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.phoneAction__btn:active { opacity: 0.75; }
+.phoneAction__btn--call {
+  background: linear-gradient(135deg, #15803d, #16a34a);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(22,163,74,0.30);
+}
+.phoneAction__btn--whatsapp {
+  background: linear-gradient(135deg, #128C7E, #25D366);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(37,211,102,0.28);
+}
+
+/* ===== STATUS UPDATE ===== */
+.statusGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.statusBtn {
+  height: 44px;
+  border-radius: var(--radius3);
+  border: 1.5px solid transparent;
+  background: rgba(240,245,255,0.7);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex; align-items: center; justify-content: center;
+  gap: 6px;
+  color: var(--muted);
+}
+.statusBtn:active { opacity: 0.75; }
+.statusBtn.is-current {
+  border-color: var(--brandC);
+  background: rgba(42,92,245,0.08);
+  color: var(--brandC);
+}
+.statusBtn[data-val="new"].is-current { border-color: rgba(42,92,245,0.5); background: rgba(42,92,245,0.08); color: var(--brandC); }
+.statusBtn[data-val="in_progress"].is-current { border-color: rgba(234,179,8,0.5); background: rgba(234,179,8,0.10); color: #92400e; }
+.statusBtn[data-val="closed"].is-current { border-color: rgba(22,163,74,0.5); background: rgba(22,163,74,0.10); color: #15803d; }
+.statusBtn[data-val="irrelevant"].is-current { border-color: rgba(239,68,68,0.5); background: rgba(239,68,68,0.08); color: #991b1b; }
+.statusBtn[data-val="no_answer"].is-current { border-color: rgba(249,115,22,0.5); background: rgba(249,115,22,0.10); color: #9a3412; }
+.statusBtn[data-val="agent_appointment"].is-current { border-color: rgba(147,51,234,0.5); background: rgba(147,51,234,0.10); color: #6b21a8; }
+
+.savingSpinner {
+  width: 14px; height: 14px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  display: none;
+}
+
+/* ===== TOAST ===== */
+.toast {
+  position: fixed;
+  bottom: calc(var(--safe-bottom) + 18px);
+  left: 50%;
+  transform: translateX(-50%) translateY(60px);
+  background: var(--brandA);
+  color: #fff;
+  font-size: 13.5px;
+  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 999px;
+  white-space: nowrap;
+  z-index: 999;
+  box-shadow: 0 8px 24px rgba(7,21,64,0.35);
+  transition: transform 0.28s cubic-bezier(0.34,1.15,0.64,1), opacity 0.22s;
+  opacity: 0;
+}
+.toast.is-visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* ===== FAB Refresh ===== */
+.fab {
+  position: fixed;
+  bottom: calc(var(--safe-bottom) + 18px);
+  left: 18px;
+  width: 50px; height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--brandDeep), var(--brandC));
+  box-shadow: 0 6px 20px rgba(42,92,245,0.40);
+  border: none;
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  z-index: 50;
+  transition: transform 0.15s;
+}
+.fab:active { transform: scale(0.92); }
+.fab svg { transition: transform 0.5s; }
+.fab.is-loading svg { animation: spin 0.7s linear infinite; }
+
+/* ===== LOGIN SCREEN ===== */
+#loginScreen {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: linear-gradient(160deg, var(--brandA) 0%, #0d2060 55%, #1e3d7a 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--safe-top) + 30px) 28px calc(var(--safe-bottom) + 28px);
+  gap: 0;
+}
+.loginCard {
+  width: 100%;
+  max-width: 360px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 28px;
+  padding: 32px 26px 28px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.loginCard__icon {
+  width: 64px; height: 64px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0.10));
+  border: 1px solid rgba(255,255,255,0.28);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+.loginCard__title {
+  font-size: 20px;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.loginCard__sub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.62);
+  margin-bottom: 20px;
+  text-align: center;
+}
+.loginInput {
+  width: 100%;
+  height: 50px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.22);
+  background: rgba(255,255,255,0.10);
+  padding: 0 16px;
+  font-family: inherit;
+  font-size: 15px;
+  color: #fff;
+  outline: none;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+}
+.loginInput::placeholder { color: rgba(255,255,255,0.42); }
+.loginInput:focus { border-color: rgba(255,255,255,0.45); background: rgba(255,255,255,0.14); }
+.loginBtn {
+  width: 100%;
+  height: 52px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, #2a5cf5, #1a3fd4);
+  color: #fff;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  margin-top: 6px;
+  box-shadow: 0 6px 22px rgba(42,92,245,0.45);
+  transition: opacity 0.15s;
+  display: flex; align-items: center; justify-content: center;
+  gap: 8px;
+}
+.loginBtn:active { opacity: 0.82; }
+.loginErr {
+  font-size: 12.5px;
+  color: #fca5a5;
+  text-align: center;
+  min-height: 18px;
+  margin-top: 4px;
+}
+.loginCard__brand {
+  margin-top: 18px;
+  font-size: 11.5px;
+  color: rgba(255,255,255,0.38);
+  font-weight: 500;
+}
+
+/* ===== NO LEADS + ERRORS ===== */
+.alertBanner {
+  background: rgba(239,68,68,0.10);
+  border: 1px solid rgba(239,68,68,0.25);
+  border-radius: var(--radius3);
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #7f1d1d;
+  margin: 8px 12px;
+}
+
+/* ===== SUMMARY BAR ===== */
+.summaryBar {
+  flex-shrink: 0;
+  display: flex;
+  gap: 6px;
+  padding: 8px 12px 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.summaryBar::-webkit-scrollbar { display: none; }
+.summaryKpi {
+  flex-shrink: 0;
+  padding: 7px 12px;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid var(--line);
+  border-radius: var(--radius3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  min-width: 68px;
+}
+.summaryKpi__val {
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--text);
+  line-height: 1;
+}
+.summaryKpi__lbl {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.summaryKpi--blue .summaryKpi__val { color: var(--brandC); }
+.summaryKpi--green .summaryKpi__val { color: #16a34a; }
+.summaryKpi--orange .summaryKpi__val { color: #ea580c; }
+.summaryKpi--yellow .summaryKpi__val { color: #ca8a04; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen">
+  <div class="loginCard">
+    <div class="loginCard__icon">📊</div>
+    <div class="loginCard__title">לידים מקמפיין</div>
+    <div class="loginCard__sub">GEMEL INVEST — כניסה מאובטחת</div>
+    <input class="loginInput" id="loginUser" type="text" placeholder="שם משתמש" autocomplete="username"/>
+    <input class="loginInput" id="loginPin" type="password" inputmode="numeric" placeholder="קוד כניסה (PIN)" autocomplete="current-password"/>
+    <button class="loginBtn" id="loginBtn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+      כניסה
+    </button>
+    <div class="loginErr" id="loginErr"></div>
+    <div class="loginCard__brand">GEMEL INVEST CRM</div>
+  </div>
+</div>
+
+<!-- APP SHELL -->
+<div id="appShell" style="display:none">
+
+  <!-- TOP BAR -->
+  <div class="topBar">
+    <div class="topBar__brand">
+      <div class="topBar__dot">📊</div>
+      <div>
+        <div class="topBar__title">לידים מקמפיין</div>
+        <div class="topBar__sub" id="topBarSub">GEMEL INVEST</div>
+      </div>
+    </div>
+    <div class="topBar__right">
+      <div class="topBar__badge" id="totalBadge">0</div>
+      <button class="topBar__btn" id="logoutBtn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        יציאה
+      </button>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab is-active" data-tab="all">
+      כל הלידים
+      <span class="tab__count" id="tabCountAll">0</span>
+    </button>
+    <button class="tab" data-tab="new">
+      חדשים
+      <span class="tab__count" id="tabCountNew">0</span>
+    </button>
+    <button class="tab" data-tab="in_progress">
+      בטיפול
+      <span class="tab__count" id="tabCountInProgress">0</span>
+    </button>
+    <button class="tab" data-tab="no_answer">
+      אין מענה
+      <span class="tab__count" id="tabCountNoAnswer">0</span>
+    </button>
+    <button class="tab" data-tab="closed">
+      נסגר
+      <span class="tab__count" id="tabCountClosed">0</span>
+    </button>
+    <button class="tab" data-tab="agent_appointment">
+      מינוי סוכן
+      <span class="tab__count" id="tabCountAppointment">0</span>
+    </button>
+    <button class="tab" data-tab="irrelevant">
+      לא רלוונטי
+      <span class="tab__count" id="tabCountIrrelevant">0</span>
+    </button>
+  </div>
+
+  <!-- SEARCH BAR -->
+  <div class="searchBar">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input class="searchBar__input" id="searchInput" type="search" placeholder="חיפוש שם, טלפון, ת.ז, קמפיין…" autocomplete="off"/>
+    <button class="searchBar__clear" id="searchClear">✕</button>
+  </div>
+
+  <!-- SUMMARY BAR -->
+  <div class="summaryBar" id="summaryBar">
+    <div class="summaryKpi summaryKpi--blue">
+      <div class="summaryKpi__val" id="kpiTotal">0</div>
+      <div class="summaryKpi__lbl">סה״כ</div>
+    </div>
+    <div class="summaryKpi summaryKpi--blue">
+      <div class="summaryKpi__val" id="kpiNew">0</div>
+      <div class="summaryKpi__lbl">חדשים</div>
+    </div>
+    <div class="summaryKpi summaryKpi--yellow">
+      <div class="summaryKpi__val" id="kpiProgress">0</div>
+      <div class="summaryKpi__lbl">בטיפול</div>
+    </div>
+    <div class="summaryKpi summaryKpi--orange">
+      <div class="summaryKpi__val" id="kpiNoAnswer">0</div>
+      <div class="summaryKpi__lbl">אין מענה</div>
+    </div>
+    <div class="summaryKpi summaryKpi--green">
+      <div class="summaryKpi__val" id="kpiClosed">0</div>
+      <div class="summaryKpi__lbl">נסגרו</div>
+    </div>
+  </div>
+
+  <!-- SCROLL AREA -->
+  <div class="scrollArea" id="leadsList">
+    <div class="stateBox" id="stateLoading">
+      <div class="spinner"></div>
+      <div class="stateBox__sub">טוען לידים…</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- DETAIL SHEET -->
+<div class="sheet" id="sheet">
+  <div class="sheet__backdrop" id="sheetBackdrop"></div>
+  <div class="sheet__card" id="sheetCard">
+    <div class="sheet__handle"></div>
+    <div class="sheet__head">
+      <div class="sheet__headInfo">
+        <div class="sheet__name" id="sheetName">—</div>
+        <span class="statusPill" id="sheetStatusPill">—</span>
+      </div>
+      <button class="sheet__closeBtn" id="sheetClose">✕</button>
+    </div>
+    <div class="sheet__body" id="sheetBody">
+      <!-- filled dynamically -->
+    </div>
+  </div>
+</div>
+
+<!-- FAB -->
+<button class="fab" id="fabRefresh" title="רענן">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+</button>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+
+/* ===== CONFIG ===== */
+const SUPABASE_URL = "https://vhvlkerectggovfihjgm.supabase.co";
+const SUPABASE_KEY = "sb_publishable_JixJJelGPWcP0BPKGq96Lw_nIiMyIBb";
+const SUPABASE_REST = SUPABASE_URL + "/rest/v1";
+const AGENTS_TABLE = "agents";
+const LEADS_TABLE = "campaign_leads";
+const META_TABLE = "app_meta";
+const AUTH_KEY = "gi_pwa_auth_v1";
+
+const STATUS_LABELS = {
+  new: "חדש",
+  in_progress: "בטיפול",
+  closed: "נסגר",
+  irrelevant: "לא רלוונטי",
+  no_answer: "אין מענה",
+  agent_appointment: "מינוי סוכן"
+};
+
+/* ===== STATE ===== */
+let allLeads = [];
+let allAgents = [];
+let currentUser = null;
+let activeTab = "all";
+let searchQ = "";
+let isSaving = false;
+
+/* ===== AUTH ===== */
+function saveAuth(user, pin) {
+  try { sessionStorage.setItem(AUTH_KEY, JSON.stringify({ user, pin })); } catch(_){}
+}
+function loadAuth() {
+  try { return JSON.parse(sessionStorage.getItem(AUTH_KEY) || "null"); } catch(_){ return null; }
+}
+function clearAuth() {
+  try { sessionStorage.removeItem(AUTH_KEY); } catch(_){}
+}
+
+/* ===== SUPABASE FETCH ===== */
+async function sbGet(table, query = "") {
+  const url = `${SUPABASE_REST}/${table}${query}`;
+  const r = await fetch(url, {
+    headers: {
+      "apikey": SUPABASE_KEY,
+      "Authorization": "Bearer " + SUPABASE_KEY,
+      "Content-Type": "application/json"
+    }
+  });
+  if (!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+
+async function sbPatch(table, id, data) {
+  const url = `${SUPABASE_REST}/${table}?id=eq.${encodeURIComponent(id)}`;
+  const r = await fetch(url, {
+    method: "PATCH",
+    headers: {
+      "apikey": SUPABASE_KEY,
+      "Authorization": "Bearer " + SUPABASE_KEY,
+      "Content-Type": "application/json",
+      "Prefer": "return=representation"
+    },
+    body: JSON.stringify(data)
+  });
+  if (!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+
+/* ===== LOGIN ===== */
+async function tryLogin(username, pin) {
+  const agents = await sbGet(AGENTS_TABLE, `?select=*`);
+  const found = agents.find(a => {
+    const uMatch = (a.username || a.name || "").toLowerCase() === username.toLowerCase();
+    const pMatch = (a.pin || a.access_code || a.password || "") === pin;
+    return uMatch && pMatch;
+  });
+  if (!found) {
+    // fallback: try meta / admin
+    const metaRows = await sbGet(META_TABLE, `?select=*&limit=1`);
+    const meta = metaRows[0]?.payload || {};
+    const users = Array.isArray(meta.users) ? meta.users : [];
+    const adminUser = users.find(u => {
+      const uMatch = (u.username || u.name || "").toLowerCase() === username.toLowerCase();
+      const pMatch = (u.pin || u.access_code || u.password || "") === pin;
+      return uMatch && pMatch;
+    });
+    if (!adminUser) throw new Error("שם משתמש או קוד כניסה שגויים");
+    return { ...adminUser, _isMetaUser: true };
+  }
+  return found;
+}
+
+/* ===== LOAD LEADS ===== */
+async function loadLeads() {
+  const rows = await sbGet(LEADS_TABLE, `?select=*&order=created_at.desc`);
+  const agentRows = await sbGet(AGENTS_TABLE, `?select=id,name`);
+  allAgents = agentRows || [];
+  allLeads = (rows || []).map(r => normalizeRow(r));
+}
+
+function normalizeRow(r) {
+  const agentId = r.assigned_agent_id || r.assignedAgentId || "";
+  let agentName = r.assigned_agent_name || r.assignedAgentName || "";
+  if (!agentName && agentId) {
+    const ag = allAgents.find(a => String(a.id) === String(agentId));
+    agentName = ag?.name || "";
+  }
+  return {
+    id: String(r.id || ""),
+    phone: r.phone || "",
+    customerName: r.customer_name || r.customerName || "",
+    description: r.description || "",
+    campaignId: r.campaign_id || r.campaignId || "",
+    campaignLabel: r.campaign_label || r.campaignLabel || "כללי",
+    assignedAgentId: agentId,
+    assignedAgentName: agentName,
+    status: r.status || "new",
+    source: r.source || "manual",
+    idNumber: r.id_number || r.idNumber || "",
+    birthDate: r.birth_date || r.birthDate || "",
+    createdAt: r.created_at || r.createdAt || "",
+    updatedAt: r.updated_at || r.updatedAt || "",
+    closedAt: r.closed_at || r.closedAt || "",
+    agentNote: r.agent_note || r.agentNote || ""
+  };
+}
+
+/* ===== FILTER ===== */
+function filteredLeads() {
+  let list = allLeads;
+  if (activeTab !== "all") {
+    list = list.filter(l => l.status === activeTab);
+  }
+  if (searchQ) {
+    const q = searchQ.toLowerCase();
+    list = list.filter(l =>
+      (l.customerName || "").toLowerCase().includes(q) ||
+      (l.phone || "").includes(q) ||
+      (l.idNumber || "").includes(q) ||
+      (l.campaignLabel || "").toLowerCase().includes(q) ||
+      (l.assignedAgentName || "").toLowerCase().includes(q)
+    );
+  }
+  return list;
+}
+
+/* ===== COUNT ===== */
+function countByStatus(s) {
+  return s === "all" ? allLeads.length : allLeads.filter(l => l.status === s).length;
+}
+
+/* ===== RENDER LEADS ===== */
+function renderLeads() {
+  const list = filteredLeads();
+  const container = document.getElementById("leadsList");
+
+  // Update counts
+  const countAll = allLeads.length;
+  document.getElementById("totalBadge").textContent = countAll;
+  document.getElementById("tabCountAll").textContent = allLeads.length;
+  document.getElementById("tabCountNew").textContent = countByStatus("new");
+  document.getElementById("tabCountInProgress").textContent = countByStatus("in_progress");
+  document.getElementById("tabCountNoAnswer").textContent = countByStatus("no_answer");
+  document.getElementById("tabCountClosed").textContent = countByStatus("closed");
+  document.getElementById("tabCountAppointment").textContent = countByStatus("agent_appointment");
+  document.getElementById("tabCountIrrelevant").textContent = countByStatus("irrelevant");
+
+  // Update KPIs
+  document.getElementById("kpiTotal").textContent = allLeads.length;
+  document.getElementById("kpiNew").textContent = countByStatus("new");
+  document.getElementById("kpiProgress").textContent = countByStatus("in_progress");
+  document.getElementById("kpiNoAnswer").textContent = countByStatus("no_answer");
+  document.getElementById("kpiClosed").textContent = countByStatus("closed");
+
+  if (!list.length) {
+    container.innerHTML = `<div class="stateBox">
+      <div class="stateBox__icon">🔍</div>
+      <div class="stateBox__title">אין לידים</div>
+      <div class="stateBox__sub">לא נמצאו לידים בסינון הנוכחי</div>
+    </div>`;
+    return;
+  }
+
+  container.innerHTML = list.map(lead => renderLeadCard(lead)).join("");
+
+  // attach click
+  container.querySelectorAll(".leadCard").forEach(card => {
+    card.addEventListener("click", () => openSheet(card.dataset.id));
+  });
+}
+
+function fmtDate(iso) {
+  if (!iso) return "—";
+  try {
+    const d = new Date(iso);
+    if (isNaN(d.getTime())) return "—";
+    return d.toLocaleString("he-IL", { timeZone: "Asia/Jerusalem", day: "2-digit", month: "2-digit", year: "2-digit", hour: "2-digit", minute: "2-digit" });
+  } catch(_) { return iso.slice(0, 16).replace("T", " "); }
+}
+
+function esc(s) {
+  return String(s || "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+function renderLeadCard(lead) {
+  const statusLabel = STATUS_LABELS[lead.status] || lead.status;
+  const agentHtml = lead.assignedAgentName
+    ? `<span class="leadCard__val">${esc(lead.assignedAgentName)}</span>`
+    : `<span class="leadCard__val leadCard__val--unassigned">לא שויך נציג</span>`;
+
+  const srcBadge = lead.source === "landing_page"
+    ? `<span class="leadCard__srcBadge">דף נחיתה</span>`
+    : lead.source === "call" ? `<span class="leadCard__srcBadge leadCard__srcBadge--call">שיחה</span>` : "";
+
+  return `<div class="leadCard" data-id="${esc(lead.id)}" data-status="${esc(lead.status)}">
+  <div class="leadCard__top">
+    <div class="leadCard__name">${esc(lead.customerName || "—")}</div>
+    <span class="statusPill statusPill--${esc(lead.status)}">${esc(statusLabel)}</span>
+  </div>
+  <div class="leadCard__rows">
+    <div class="leadCard__row">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8Z"/></svg>
+      <span class="leadCard__lbl">טלפון</span>
+      <span class="leadCard__val leadCard__val--phone">${esc(lead.phone || "—")}</span>
+    </div>
+    <div class="leadCard__row">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span class="leadCard__lbl">נציג</span>
+      ${agentHtml}
+    </div>
+    <div class="leadCard__row">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <span class="leadCard__lbl">קמפיין</span>
+      <span class="leadCard__val">${esc(lead.campaignLabel || "—")}${srcBadge}</span>
+    </div>
+    <div class="leadCard__row">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      <span class="leadCard__lbl">תאריך</span>
+      <span class="leadCard__val">${esc(fmtDate(lead.createdAt))}</span>
+    </div>
+  </div>
+</div>`;
+}
+
+/* ===== DETAIL SHEET ===== */
+function openSheet(id) {
+  const lead = allLeads.find(l => l.id === id);
+  if (!lead) return;
+
+  document.getElementById("sheetName").textContent = lead.customerName || "—";
+  const pill = document.getElementById("sheetStatusPill");
+  pill.textContent = STATUS_LABELS[lead.status] || lead.status;
+  pill.className = "statusPill statusPill--" + lead.status;
+
+  const body = document.getElementById("sheetBody");
+  const phone = lead.phone || "";
+
+  const descDisplay = (lead.description || "").split("---LEAD_META_JSON---")[0].split("---LANDING_PAYLOAD---")[0].trim();
+
+  body.innerHTML = `
+    ${phone ? `<div class="phoneAction">
+      <button class="phoneAction__btn phoneAction__btn--call" onclick="window.location='tel:${esc(phone)}'">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8Z"/></svg>
+        חייג
+      </button>
+      <button class="phoneAction__btn phoneAction__btn--whatsapp" onclick="window.open('https://wa.me/972${esc(phone.replace(/^0/, '').replace(/[^0-9]/g,''))}','_blank')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.096.54 4.067 1.487 5.782L0 24l6.395-1.668A11.934 11.934 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.82 9.82 0 0 1-5.028-1.38l-.36-.214-3.733.976.999-3.642-.235-.374A9.818 9.818 0 0 1 12 2.182c5.42 0 9.818 4.398 9.818 9.818S17.42 21.818 12 21.818z"/></svg>
+        WhatsApp
+      </button>
+    </div>` : ""}
+
+    <div class="detailSection">
+      <div class="detailSection__title">פרטי לקוח</div>
+      ${lead.idNumber ? `<div class="detailRow">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        <span class="detailRow__label">ת.ז</span>
+        <span class="detailRow__val">${esc(lead.idNumber)}</span>
+      </div>` : ""}
+      ${lead.birthDate ? `<div class="detailRow">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        <span class="detailRow__label">תאריך לידה</span>
+        <span class="detailRow__val">${esc(lead.birthDate)}</span>
+      </div>` : ""}
+      <div class="detailRow">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span class="detailRow__label">נציג</span>
+        <span class="detailRow__val ${!lead.assignedAgentName ? 'detailRow__val--muted' : ''}">${esc(lead.assignedAgentName || "לא שויך")}</span>
+      </div>
+      <div class="detailRow">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <span class="detailRow__label">קמפיין</span>
+        <span class="detailRow__val">${esc(lead.campaignLabel || "—")}</span>
+      </div>
+      <div class="detailRow">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span class="detailRow__label">נוצר</span>
+        <span class="detailRow__val">${esc(fmtDate(lead.createdAt))}</span>
+      </div>
+      <div class="detailRow">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span class="detailRow__label">עדכון</span>
+        <span class="detailRow__val">${esc(fmtDate(lead.updatedAt))}</span>
+      </div>
+      ${descDisplay ? `<div class="detailRow detailRow--desc">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        <span class="detailRow__label">סיבת פנייה</span>
+        <span class="detailRow__val">${esc(descDisplay)}</span>
+      </div>` : ""}
+      ${lead.agentNote ? `<div class="detailRow detailRow--desc">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span class="detailRow__label">הערת נציג</span>
+        <span class="detailRow__val">${esc(lead.agentNote)}</span>
+      </div>` : ""}
+    </div>
+
+    <div class="detailSection">
+      <div class="detailSection__title">עדכון סטטוס</div>
+      <div class="statusGrid" id="statusGrid">
+        ${Object.entries(STATUS_LABELS).map(([val, lbl]) =>
+          `<button class="statusBtn ${lead.status === val ? 'is-current' : ''}" data-val="${esc(val)}" data-lead-id="${esc(lead.id)}">
+            ${lbl}
+          </button>`
+        ).join("")}
+      </div>
+      <div id="statusSaving" style="display:none;text-align:center;font-size:12.5px;color:var(--muted);padding:6px">שומר…</div>
+    </div>
+  `;
+
+  // status buttons
+  body.querySelectorAll(".statusBtn").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      if (isSaving) return;
+      const newStatus = btn.dataset.val;
+      const leadId = btn.dataset.leadId;
+      if (!leadId) return;
+      const currentLead = allLeads.find(l => l.id === leadId);
+      if (!currentLead || currentLead.status === newStatus) return;
+
+      isSaving = true;
+      document.getElementById("statusSaving").style.display = "";
+      body.querySelectorAll(".statusBtn").forEach(b => b.disabled = true);
+
+      try {
+        const now = new Date().toISOString();
+        const patchData = { status: newStatus, updated_at: now };
+        if (newStatus === "closed") patchData.closed_at = now;
+        await sbPatch(LEADS_TABLE, leadId, patchData);
+
+        // Update local state
+        const idx = allLeads.findIndex(l => l.id === leadId);
+        if (idx >= 0) {
+          allLeads[idx].status = newStatus;
+          allLeads[idx].updatedAt = now;
+          if (newStatus === "closed") allLeads[idx].closedAt = now;
+        }
+
+        showToast("סטטוס עודכן: " + STATUS_LABELS[newStatus]);
+        renderLeads();
+        // re-open sheet
+        openSheet(leadId);
+      } catch(e) {
+        showToast("שגיאה בשמירה: " + e.message.slice(0,40));
+      } finally {
+        isSaving = false;
+        document.getElementById("statusSaving").style.display = "none";
+        body.querySelectorAll(".statusBtn").forEach(b => b.disabled = false);
+      }
+    });
+  });
+
+  document.getElementById("sheet").classList.add("is-open");
+}
+
+function closeSheet() {
+  document.getElementById("sheet").classList.remove("is-open");
+}
+
+/* ===== TOAST ===== */
+let toastTimer = null;
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("is-visible");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("is-visible"), 2800);
+}
+
+/* ===== REFRESH ===== */
+async function refresh() {
+  const fab = document.getElementById("fabRefresh");
+  fab.classList.add("is-loading");
+  try {
+    await loadLeads();
+    renderLeads();
+    showToast("הלידים עודכנו ✓");
+  } catch(e) {
+    showToast("שגיאת טעינה: " + e.message.slice(0,40));
+  } finally {
+    fab.classList.remove("is-loading");
+  }
+}
+
+/* ===== INIT APP ===== */
+async function initApp(user) {
+  currentUser = user;
+  const name = user.name || user.username || "משתמש";
+  document.getElementById("topBarSub").textContent = "שלום, " + name;
+
+  document.getElementById("loginScreen").style.display = "none";
+  document.getElementById("appShell").style.display = "flex";
+
+  // show loading
+  document.getElementById("leadsList").innerHTML = `<div class="stateBox"><div class="spinner"></div><div class="stateBox__sub">טוען לידים…</div></div>`;
+
+  try {
+    await loadLeads();
+    renderLeads();
+  } catch(e) {
+    document.getElementById("leadsList").innerHTML = `<div class="alertBanner">שגיאה בטעינת לידים: ${esc(e.message)}</div>`;
+  }
+}
+
+/* ===== EVENTS ===== */
+document.getElementById("loginBtn").addEventListener("click", async () => {
+  const user = document.getElementById("loginUser").value.trim();
+  const pin = document.getElementById("loginPin").value.trim();
+  const errEl = document.getElementById("loginErr");
+  errEl.textContent = "";
+  if (!user || !pin) { errEl.textContent = "יש למלא שם משתמש וקוד כניסה"; return; }
+
+  const btn = document.getElementById("loginBtn");
+  btn.textContent = "מתחבר…";
+  btn.disabled = true;
+  try {
+    const found = await tryLogin(user, pin);
+    saveAuth(user, pin);
+    await initApp(found);
+  } catch(e) {
+    errEl.textContent = e.message || "שגיאת כניסה";
+  } finally {
+    btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>כניסה`;
+    btn.disabled = false;
+  }
+});
+
+// Enter key on login
+["loginUser","loginPin"].forEach(id => {
+  document.getElementById(id).addEventListener("keydown", e => {
+    if (e.key === "Enter") document.getElementById("loginBtn").click();
+  });
+});
+
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  clearAuth();
+  location.reload();
+});
+
+// Tabs
+document.querySelector(".tabs").addEventListener("click", e => {
+  const tab = e.target.closest("[data-tab]");
+  if (!tab) return;
+  activeTab = tab.dataset.tab;
+  document.querySelectorAll(".tab").forEach(t => t.classList.toggle("is-active", t === tab));
+  renderLeads();
+});
+
+// Search
+const searchInput = document.getElementById("searchInput");
+const searchClear = document.getElementById("searchClear");
+searchInput.addEventListener("input", () => {
+  searchQ = searchInput.value.trim();
+  searchClear.classList.toggle("is-visible", !!searchQ);
+  renderLeads();
+});
+searchClear.addEventListener("click", () => {
+  searchInput.value = "";
+  searchQ = "";
+  searchClear.classList.remove("is-visible");
+  renderLeads();
+  searchInput.focus();
+});
+
+// Sheet close
+document.getElementById("sheetClose").addEventListener("click", closeSheet);
+document.getElementById("sheetBackdrop").addEventListener("click", closeSheet);
+
+// FAB
+document.getElementById("fabRefresh").addEventListener("click", () => refresh());
+
+// Auto-refresh every 90s when app is visible
+setInterval(() => {
+  if (!document.hidden && currentUser) refresh();
+}, 90000);
+
+/* ===== AUTO LOGIN ===== */
+(async () => {
+  const saved = loadAuth();
+  if (saved?.user && saved?.pin) {
+    document.getElementById("loginUser").value = saved.user;
+    document.getElementById("loginPin").value = saved.pin;
+    try {
+      const found = await tryLogin(saved.user, saved.pin);
+      await initApp(found);
+    } catch(_) {
+      clearAuth();
+    }
+  }
+})();
+</script>
+</body>
+</html>
